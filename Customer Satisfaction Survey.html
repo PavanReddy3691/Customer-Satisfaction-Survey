@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .radio-group label,
+        .checkbox-group label {
+            display: block;
+            margin: 5px 0;
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+        }
+        button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #response {
+            margin-top: 20px;
+            font-size: 1.2em;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Customer Satisfaction Survey</h1>
+        <form id="surveyForm">
+            <div class="form-group">
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label>How satisfied are you with our service?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="satisfaction" value="Very Satisfied" required> Very Satisfied</label>
+                    <label><input type="radio" name="satisfaction" value="Satisfied"> Satisfied</label>
+                    <label><input type="radio" name="satisfaction" value="Neutral"> Neutral</label>
+                    <label><input type="radio" name="satisfaction" value="Dissatisfied"> Dissatisfied</label>
+                    <label><input type="radio" name="satisfaction" value="Very Dissatisfied"> Very Dissatisfied</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Which of the following features do you find most useful? (Select all that apply)</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="features" value="Feature A"> Feature A</label>
+                    <label><input type="checkbox" name="features" value="Feature B"> Feature B</label>
+                    <label><input type="checkbox" name="features" value="Feature C"> Feature C</label>
+                    <label><input type="checkbox" name="features" value="Feature D"> Feature D</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="comments">Additional Comments:</label>
+                <textarea id="comments" name="comments" rows="4"></textarea>
+            </div>
+
+            <div class="form-group button-group">
+                <button type="submit">Submit</button>
+                <button type="reset">Reset</button>
+            </div>
+        </form>
+        <div id="response"></div>
+    </div>
+
+    <script>
+        document.getElementById('surveyForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+            
+            // Gather form data
+            const formData = new FormData(this);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const satisfaction = formData.get('satisfaction');
+            const features = formData.getAll('features');
+            const comments = formData.get('comments');
+
+            // Create response text
+            let responseText = `<h2>Thank you for your feedback, ${name}!</h2>`;
+            responseText += `<p><strong>Email:</strong> ${email}</p>`;
+            responseText += `<p><strong>Satisfaction:</strong> ${satisfaction}</p>`;
+            responseText += `<p><strong>Features you like:</strong> ${features.length > 0 ? features.join(', ') : 'None'}</p>`;
+            responseText += `<p><strong>Comments:</strong> ${comments ? comments : 'None'}</p>`;
+
+            // Display response
+            document.getElementById('response').innerHTML = responseText;
+        });
+    </script>
+</body>
+</html>
